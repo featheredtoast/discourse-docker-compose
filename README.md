@@ -8,6 +8,12 @@ Check the docker-compose.yml file for how it's setup.
 
 As is, it runs a testing mailhog instance for mail, postgres 15, and latest built tests-passed.
 
+## Running
+
+`docker compose up -d`
+
+Rebuilding just web: `docker compose up -d --force-recreate --pull always --no-deps web`
+
 ## Components
 
 Web is built from `launcher build web_only`. The rest of the jobfile is shuffling docker images, dealing with platform arguments, and figuring out version tags.
