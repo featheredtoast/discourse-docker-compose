@@ -1,0 +1,69 @@
+services:
+  # Mailhog for testing...
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+  redis:
+    image: redis
+    volumes:
+      - ./shared/test-redis:/data
+
+  # separate db instance
+  # migrate to separated postgres data
+  #https://github.com/docker-library/postgres/pull/1259
+  db:
+    image: featheredtoast/discourse-db
+    volumes:
+      - ./shared/test-pg:/var/lib/postgresql
+      - ./shared/test-pg/data:/var/lib/postgresql/data
+    environment:
+      DB_PASSWORD: SOME_SECRET
+
+# old style 2-container data
+#  db:
+#    image: local_discourse/data
+#    volumes:
+#      - ./shared/test-pg:/shared
+#    environment:
+#      DISCOURSE_DB_PASSWORD: SOME_SECRET
+#      CREATE_DB_ON_BOOT: 1
+
+  web:
+    image: featheredtoast/discourse-web
+    links:
+      - db
+      - redis
+      - mail
+    environment:
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_PASSWORD: SOME_SECRET
+      DISCOURSE_DEVELOPER_EMAILS: user@example.com
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_SMTP_ADDRESS: mail
+      DISCOURSE_SMTP_PORT: 1025
+      DISCOURSE_SMTP_PASSWORD: pa$$word
+      DISCOURSE_SMTP_USER_NAME: user@example.com
+
+      # These could be bundled in as default env on the base image
+      RAILS_ENV: 'production'
+      UNICORN_WORKERS: 3
+      UNICORN_SIDEKIQS: 1
+      RUBY_GC_HEAP_GROWTH_MAX_SLOTS: 40000
+      RUBY_GC_HEAP_INIT_SLOTS: 400000
+      RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: 1.5
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      LANGUAGE: en_US.UTF-8
+      MIGRATE_ON_BOOT: 1
+      PRECOMPILE_ON_BOOT: 1
+    ports:
+      - 443:443
+      - 80:80
+    depends_on:
+      - db
+      - redis
+volumes:
+  test-data:
+  test-redis-data:
