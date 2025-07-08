@@ -7,6 +7,7 @@ services:
   # Redis isn't as customized, use off the shelf
   redis:
     image: redis
+    restart: unless-stopped
     volumes:
       - ./shared/test-redis:/data
 
@@ -16,6 +17,7 @@ services:
   # built from https://github.com/featheredtoast/discourse-db
   db:
     image: featheredtoast/discourse-db:pg15
+    restart: unless-stopped
     volumes:
       - ./shared/db:/var/lib/postgresql
       - ./shared/db/data:/var/lib/postgresql/data
@@ -26,6 +28,7 @@ services:
   # built from `launcher build web_only`
   web:
     image: featheredtoast/discourse-web
+    restart: unless-stopped
     links:
       - db
       - redis
