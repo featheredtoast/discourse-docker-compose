@@ -4,6 +4,7 @@ services:
     image: mailhog/mailhog
     ports:
       - 8025:8025
+  # Redis isn't as customized, use off the shelf
   redis:
     image: redis
     volumes:
@@ -12,23 +13,17 @@ services:
   # separate db instance
   # migrate to separated postgres data
   #https://github.com/docker-library/postgres/pull/1259
+  # built from https://github.com/featheredtoast/discourse-db
   db:
-    image: featheredtoast/discourse-db
+    image: featheredtoast/discourse-db:pg15
     volumes:
-      - ./shared/test-pg:/var/lib/postgresql
-      - ./shared/test-pg/data:/var/lib/postgresql/data
+      - ./shared/db:/var/lib/postgresql
+      - ./shared/db/data:/var/lib/postgresql/data
     environment:
       DB_PASSWORD: SOME_SECRET
 
-# old style 2-container data
-#  db:
-#    image: local_discourse/data
-#    volumes:
-#      - ./shared/test-pg:/shared
-#    environment:
-#      DISCOURSE_DB_PASSWORD: SOME_SECRET
-#      CREATE_DB_ON_BOOT: 1
-
+  # zero config/plugin batteries included image built from https://github.com/featheredtoast/discourse_docker/blob/refs/heads/toast/build-web-only/.github/workflows/push-web-only.yml#L80
+  # built from `launcher build web_only`
   web:
     image: featheredtoast/discourse-web
     links:
@@ -64,6 +59,3 @@ services:
     depends_on:
       - db
       - redis
-volumes:
-  test-data:
-  test-redis-data:
