@@ -24,7 +24,7 @@ services:
     environment:
       DB_PASSWORD: SOME_SECRET
 
-  # zero config/plugin batteries included image built from https://github.com/featheredtoast/discourse_docker/blob/refs/heads/toast/build-web-only/.github/workflows/push-web-only.yml#L80
+  # zero config/plugin batteries included image built from https://github.com/featheredtoast/discourse-docker-compose/blob/main/.github/workflows/push-web-only.yml
   # built from `launcher build web_only`
   web:
     image: featheredtoast/discourse
