@@ -27,7 +27,7 @@ services:
   # zero config/plugin batteries included image built from https://github.com/featheredtoast/discourse_docker/blob/refs/heads/toast/build-web-only/.github/workflows/push-web-only.yml#L80
   # built from `launcher build web_only`
   web:
-    image: featheredtoast/discourse-web
+    image: featheredtoast/discourse
     restart: unless-stopped
     links:
       - db
