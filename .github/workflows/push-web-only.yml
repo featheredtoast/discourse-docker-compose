@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - toast/build-web-only
+      - main
   schedule:
     - cron: "0 0 * * *"
 
