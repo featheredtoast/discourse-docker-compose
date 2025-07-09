@@ -18,7 +18,7 @@ Rebuilding just web: `docker compose up -d --force-recreate --pull always --no-d
 
 Web is built from `launcher build web_only`. The rest of the jobfile is shuffling docker images, dealing with platform arguments, and figuring out version tags.
 
-See https://github.com/featheredtoast/discourse_docker/blob/refs/heads/toast/build-web-only/.github/workflows/push-web-only.yml#L80 for image building, as that line specifically is the only thing needed to build a public image.
+See https://github.com/featheredtoast/discourse-docker-compose/blob/30895e4d885a09de03d594fbcd4d51fa2beb8701/.github/workflows/push-web-only.yml#L78 for image building, as that line specifically is the only thing needed to build a public image.
 
 See https://github.com/featheredtoast/discourse-db for running a customized postgres image, tuned to Discourse with the same customizations as the discourse_docker data image.
 
