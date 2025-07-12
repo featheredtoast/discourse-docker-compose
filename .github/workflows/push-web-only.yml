@@ -75,6 +75,7 @@ jobs:
           # bin/launcher build --params="version=stable" --conf-dir=./samples web_only
           cp ./samples/web_only.yml ./containers/web_only.yml
           sed -Ei 's/^ *+#?version:.*/  version: ${{ matrix.version }}/' ./containers/web_only.yml
+          sed -Ei '/^ *+- "templates\/web.template.yml"/a\  - "templates/offline-page.template.yml"' ./containers/web_only.yml
           bin/launcher build web_only
           docker tag local_discourse/web_only ${{ env.DOCKER_REPO }}:${{ env.FLOATING_TAG }}
           docker push ${{ env.DOCKER_REPO }}:${{ env.FLOATING_TAG }}
