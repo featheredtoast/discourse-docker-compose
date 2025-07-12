@@ -43,19 +43,6 @@ services:
       DISCOURSE_SMTP_PORT: 1025
       DISCOURSE_SMTP_PASSWORD: pa$$word
       DISCOURSE_SMTP_USER_NAME: user@example.com
-
-      # These could be bundled in as default env on the base image
-      RAILS_ENV: 'production'
-      UNICORN_WORKERS: 3
-      UNICORN_SIDEKIQS: 1
-      RUBY_GC_HEAP_GROWTH_MAX_SLOTS: 40000
-      RUBY_GC_HEAP_INIT_SLOTS: 400000
-      RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: 1.5
-      LC_ALL: en_US.UTF-8
-      LANG: en_US.UTF-8
-      LANGUAGE: en_US.UTF-8
-      MIGRATE_ON_BOOT: 1
-      PRECOMPILE_ON_BOOT: 1
     ports:
       - 443:443
       - 80:80
