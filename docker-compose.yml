@@ -45,10 +45,7 @@ services:
       DISCOURSE_SMTP_PORT: 1025
       DISCOURSE_SMTP_PASSWORD: pa$$word
       DISCOURSE_SMTP_USER_NAME: user@example.com
-      # Once the following PR is in place
-      # https://github.com/discourse/discourse_docker/pull/977
-      # this would allow for letsencrypt to setup on boot
-      # when a valid email is provided like so:
+      # Uncomment and configure to set up let's encrypt for ssl termination
       # LETSENCRYPT_ACCOUNT_EMAIL: test@example.com
     ports:
       - 443:443

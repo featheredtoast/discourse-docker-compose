@@ -22,8 +22,10 @@ See https://github.com/featheredtoast/discourse-docker-compose/blob/30895e4d885a
 
 See https://github.com/featheredtoast/discourse-db for running a customized postgres image, tuned to Discourse with the same customizations as the discourse_docker data image.
 
-## Pitfalls
+## Extras
 
-UI Upgrades work, but if the image is destroyed, and recreated post-update, that might be less than ideal as migrations may be destructive. I suspect this is more likely to happen with docker-compose, as the user has no easy ability to rebuild from the CLI.
+Let's Encrypt ssl cert enabled from [this pr](https://github.com/discourse/discourse_docker/pull/977) when `LETSENCRYPT_ACCOUNT_EMAIL` env var is set.
+
+## Pitfalls
 
 No plugins are here - there's no good way to dynamically load plugins (yet). It's always possible to build your own images.
