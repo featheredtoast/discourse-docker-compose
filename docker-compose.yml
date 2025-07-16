@@ -9,7 +9,7 @@ services:
     image: redis
     restart: unless-stopped
     volumes:
-      - ./shared/test-redis:/data
+      - ./shared/redis:/data
 
   # separate db instance
   # migrate to separated postgres data
@@ -29,6 +29,8 @@ services:
   web:
     image: featheredtoast/discourse
     restart: unless-stopped
+    volumes:
+      - ./shared/web:/shared
     links:
       - db
       - redis
@@ -43,6 +45,11 @@ services:
       DISCOURSE_SMTP_PORT: 1025
       DISCOURSE_SMTP_PASSWORD: pa$$word
       DISCOURSE_SMTP_USER_NAME: user@example.com
+      # Once the following PR is in place
+      # https://github.com/discourse/discourse_docker/pull/977
+      # this would allow for letsencrypt to setup on boot
+      # when a valid email is provided like so:
+      # LETSENCRYPT_ACCOUNT_EMAIL: test@example.com
     ports:
       - 443:443
       - 80:80
