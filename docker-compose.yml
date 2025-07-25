@@ -14,9 +14,9 @@ services:
   # separate db instance
   # migrate to separated postgres data
   #https://github.com/docker-library/postgres/pull/1259
-  # built from https://github.com/featheredtoast/discourse-db
+  # built from https://github.com/discourse/postgresql
   db:
-    image: featheredtoast/discourse-db:pg15
+    image: discourse/postgres:pg15
     restart: unless-stopped
     volumes:
       - ./shared/db:/var/lib/postgresql
