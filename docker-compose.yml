@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./shared/redis:/data
+    shm_size: '512m'
 
   # separate db instance
   # migrate to separated postgres data
@@ -23,18 +24,15 @@ services:
       - ./shared/db/data:/var/lib/postgresql/data
     environment:
       DB_PASSWORD: SOME_SECRET
+    shm_size: '512m'
 
   # zero config/plugin batteries included image built from https://github.com/featheredtoast/discourse-docker-compose/blob/main/.github/workflows/push-web-only.yml
   # built from `launcher build web_only`
   web:
-    image: featheredtoast/discourse
+    image: discourse/discourse
     restart: unless-stopped
     volumes:
       - ./shared/web:/shared
-    links:
-      - db
-      - redis
-      - mail
     environment:
       DISCOURSE_DB_HOST: db
       DISCOURSE_DB_PASSWORD: SOME_SECRET
@@ -53,3 +51,4 @@ services:
     depends_on:
       - db
       - redis
+    shm_size: '512m'
