@@ -1,10 +1,4 @@
 services:
-  # Mailhog for testing...
-  mail:
-    image: mailhog/mailhog
-    ports:
-      - 8025:8025
-  # Redis isn't as customized, use off the shelf
   redis:
     image: redis
     restart: unless-stopped
@@ -12,10 +6,6 @@ services:
       - ./shared/redis:/data
     shm_size: '512m'
 
-  # separate db instance
-  # migrate to separated postgres data
-  #https://github.com/docker-library/postgres/pull/1259
-  # built from https://github.com/discourse/postgresql
   db:
     image: discourse/postgres
     restart: unless-stopped
@@ -26,25 +16,28 @@ services:
       DB_PASSWORD: SOME_SECRET
     shm_size: '512m'
 
-  # zero config/plugin batteries included image built from https://github.com/featheredtoast/discourse-docker-compose/blob/main/.github/workflows/push-web-only.yml
-  # built from `launcher build web_only`
   web:
     image: discourse/discourse
     restart: unless-stopped
     volumes:
       - ./shared/web:/shared
     environment:
+      # Connect with the databases above
       DISCOURSE_DB_HOST: db
       DISCOURSE_DB_PASSWORD: SOME_SECRET
-      DISCOURSE_DEVELOPER_EMAILS: user@example.com
-      DISCOURSE_HOSTNAME: localhost
       DISCOURSE_REDIS_HOST: redis
-      DISCOURSE_SMTP_ADDRESS: mail
+
+      # Edit DISCOURSE_ values with your own config
+      DISCOURSE_DEVELOPER_EMAILS: user@example.com
+      DISCOURSE_HOSTNAME: site.example.com
+      DISCOURSE_SMTP_ADDRESS: mail.example.com
       DISCOURSE_SMTP_PORT: 1025
       DISCOURSE_SMTP_PASSWORD: pa$$word
       DISCOURSE_SMTP_USER_NAME: user@example.com
-      # Uncomment and configure to set up let's encrypt for ssl termination
+      # Uncomment and configure to set up let's encrypt for https
       # LETSENCRYPT_ACCOUNT_EMAIL: test@example.com
+      # Optional: list any desired extra domains to let's encrypt requests
+      # DISCOURSE_HOSTNAME_ALIASES: site2.example.com,site3.example.com
     ports:
       - 443:443
       - 80:80
