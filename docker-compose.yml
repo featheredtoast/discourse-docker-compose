@@ -17,7 +17,7 @@ services:
   #https://github.com/docker-library/postgres/pull/1259
   # built from https://github.com/discourse/postgresql
   db:
-    image: discourse/postgres:pg15
+    image: discourse/postgres
     restart: unless-stopped
     volumes:
       - ./shared/db:/var/lib/postgresql
