@@ -35,7 +35,7 @@ services:
       DISCOURSE_SMTP_PASSWORD: pa$$word
       DISCOURSE_SMTP_USER_NAME: user@example.com
       # Uncomment and configure to set up let's encrypt for https
-      # LETSENCRYPT_ACCOUNT_EMAIL: test@example.com
+      # ENABLE_LETSENCRYPT: 1
       # Optional: list any desired extra domains to let's encrypt requests
       # DISCOURSE_HOSTNAME_ALIASES: site2.example.com,site3.example.com
     ports:
