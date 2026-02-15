@@ -64,6 +64,7 @@ jobs:
       - name: download-launcher
         run: |
           BINDIR="bin"
+          mkdir ${BINDIR}
           package="${BINDIR}/launcher.tar.gz"
           curl -s -o ${package} -L https://get.discourse.org/launcher/latest/launcher-linux-${{ env.ARCH }}.tar.gz
           tar -zxf ${package} -C ${BINDIR}
