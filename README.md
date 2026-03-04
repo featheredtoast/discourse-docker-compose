@@ -20,7 +20,7 @@ Web is built from `launcher build web_only`. The rest of the jobfile is shufflin
 
 See https://github.com/discourse/discourse_docker/blob/main/.github/workflows/push-web-only.yml#L87-L90 for image building, as that line specifically is the only thing needed to build a public image.
 
-See https://github.com/discourse/postgres for running a customized postgres image, tuned to Discourse with the same customizations as the discourse_docker data image.
+See https://github.com/discourse/discourse-postgres for running a customized postgres image, tuned to Discourse with the same customizations as the discourse_docker data image.
 
 ## Extras
 
