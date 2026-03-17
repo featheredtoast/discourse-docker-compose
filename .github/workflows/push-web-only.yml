@@ -89,7 +89,7 @@ jobs:
           sed -Ei 's/^ *+#- "templates\/web.letsencrypt.ssl.template.yml"/  - "templates\/web.letsencrypt.ssl.template.yml"/' ./containers/web_only.yml
 
           # plugins
-          sed -Ei '/^ *+after_code:/a\    - exec:\n        cd: \$home\/plugins\n        cmd:\n          - git clone https://github.com/xfalcox/resenha.git' ./web_only.yml
+          sed -Ei '/^ *+after_code:/a\    - exec:\n        cd: \$home\/plugins\n        cmd:\n          - git clone https://github.com/xfalcox/resenha.git' ./containers/web_only.yml
           bin/launcher build web_only \
             --tag ${{ env.DOCKER_REPO }}:${{ env.FLOATING_TAG }} \
             --tag ${{ env.DOCKER_REPO }}:${{ env.TAG }} \
