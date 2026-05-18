@@ -26,6 +26,8 @@ See https://github.com/discourse/discourse-postgres for running a customized pos
 
 Let's Encrypt ssl cert enabled when `LETSENCRYPT_ACCOUNT_EMAIL` env var is set.
 
+This image now comes bundled in with [Resenha](https://meta.discourse.org/t/resenha-add-discord-style-voice-rooms-to-your-community/389056) for voice support.
+
 ## Pitfalls
 
 No plugins are here - there's no good way to dynamically load plugins (yet). It's always possible to build your own images.
