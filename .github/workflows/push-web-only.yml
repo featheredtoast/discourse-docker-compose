@@ -55,6 +55,7 @@ jobs:
     needs: version
     env:
       ARCH: ${{ matrix.os == 'ubuntu-24.04-arm' && 'arm64' || 'amd64' }}
+      VERSION: ${{ matrix.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -88,10 +89,21 @@ jobs:
 
           # plugins
           sed -Ei '/^ *+after_code:/a\    - exec:\n        cd: \$home\/plugins\n        cmd:\n          - git clone https://github.com/xfalcox/resenha.git' ./containers/web_only.yml
-          bin/launcher build --build-slim web_only \
+
+          # try to build slim on latest
+          if [ "$VERSION" = "latest" ]; then
+          bin/launcher build \
+            --build-slim web_only \
             --tag ${{ env.DOCKER_IMAGE }} \
             --output=type=registry,push-by-digest=true \
             --metadata-file=/tmp/out.json
+          else
+          bin/launcher build \
+            web_only \
+            --tag ${{ env.DOCKER_IMAGE }} \
+            --output=type=registry,push-by-digest=true \
+            --metadata-file=/tmp/out.json
+          fi
       - name: save image digests
         id: metadata
         run: |
