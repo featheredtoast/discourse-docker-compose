@@ -81,6 +81,10 @@ jobs:
           # bin/launcher build --params="version=esr" --conf-dir=./samples web_only
           cp ./samples/web_only.yml ./containers/web_only.yml
           echo $(grep base_image: ./templates/web.template.yml)-web-only >> ./containers/web_only.yml
+
+          # use slimmed image on slim deps-only builds
+          sed -Ei '/^base_image:.*/a\base_image_slim: featheredtoast/discourse-base:runtime-deps' ./containers/web_only.yml
+
           sed -Ei 's/^ *+#?version:.*/  version: ${{ matrix.version }}/' ./containers/web_only.yml
           sed -Ei '/^env:.*/a\  DISABLE_LETSENCRYPT: 1' ./containers/web_only.yml
           sed -Ei '/^ *+- "templates\/web.template.yml"/a\  - "templates/offline-page.template.yml"' ./containers/web_only.yml
@@ -88,7 +92,10 @@ jobs:
           sed -Ei 's/^ *+#- "templates\/web.letsencrypt.ssl.template.yml"/  - "templates\/web.letsencrypt.ssl.template.yml"/' ./containers/web_only.yml
 
           # plugins
-          sed -Ei '/^ *+after_code:/a\    - exec:\n        cd: \$home\/plugins\n        cmd:\n          - git clone https://github.com/xfalcox/resenha.git' ./containers/web_only.yml
+          # add resenha
+          sed -Ei '/^.*docker_manager.git/a\          - git clone https://github.com/xfalcox/resenha.git' ./containers/web_only.yml
+          # remove docker manager
+          sed -Ei '/^.*docker_manager.git/d' ./containers/web_only.yml
 
           # try to build slim on latest
           if [ "$VERSION" = "latest" ]; then
